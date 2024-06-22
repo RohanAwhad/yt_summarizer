@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Transcript Downloader</title>
+    <style>
+        body {
+            width: 640px;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            background-color: #fff3e0; /* Warm light background */
+        }
+        h1 {
+            font-size: 20px;
+            text-align: center;
+            color: #5d4037; /* Warm dark brown color */
+        }
+        button {
+            width: 256px;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            background-color: #ff7043; /* Warm orange background */
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 4px; /* Rounded corners */
+        }
+        button:hover {
+            background-color: #e64a19; /* Darker warm orange background */
+        }
+        input {
+            width: 256px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #ffccbc; /* Warm light border */
+            border-radius: 4px; /* Rounded corners */
+        }
+        #summaryOutput {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ffccbc; /* Warm light border */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            background-color: #ffe0b2; /* Warm card background */
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width calculation */
+            font-family: 'Georgia', serif; /* Readable font */
+            font-size: 16px; /* Good readable font size */
+            color: #4e342e; /* Warm dark brown font color */
+            line-height: 1.6; /* Improved readability with line height */
+        }
+        .hidden {
+          display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>YouTube Transcript Downloader / Summarizer</h1>
+    <div style="text-align: center;">
+        <input type="password" id="openaiApiKey" placeholder="Enter OpenAI API Key">
+        <button id="downloadButton">Download Transcript</button>
+        <button id="philosophicalButton">Philosophical Analysis Summary</button>
+        <button id="technicalButton">Technical and Practical Summary</button>
+        <button id="strategicButton">Strategic Business Summary</button>
+        <button id="innovativeButton">Innovative and Visionary Summary</button>
+        <button id="comprehensiveButton">Comprehensive General Summary</button>
+    </div>
+    <button id="copyButton" class="hidden">Copy Summary</button>
+    <div id="summaryOutput"></div>
+    <script src="external_libs/showdown.min.js"></script>
+    <script src="summarizer.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
