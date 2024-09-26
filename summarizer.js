@@ -71,7 +71,7 @@ async function generateSummary(prompt, transcriptText, apiKey, updateUI) {
   const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
   const requestBody = {
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o-mini',
       messages: [
           { role: 'system', content: prompt },
           { role: 'user', content: transcriptText },
