@@ -1,7 +1,7 @@
 # Youtube summarizer
 
 To install the extension, follow the steps below:
-  0. Clone the git repo, by navigating your directory, and doing:
+  1. Clone the git repo, by navigating your directory, and doing:
      ```bash
      git clone https://github.com/RohanAwhad/yt_summarizer.git
      ```
