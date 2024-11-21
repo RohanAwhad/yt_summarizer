@@ -7,43 +7,6 @@ function download_transcript () {
 
 window.addEventListener("DOMContentLoaded", () => {
 
-  /*updateUI(`# Summary of PiSpark and Apache Spark Course
-
-## 1. Technical Insights
-- **PiSpark**: An interface for Apache Spark specifically designed for Python, facilitating large-scale data processing and machine learning tasks.
-- Discussed features like **Spark DataFrames**, ability to handle distributed data processing, machine learning with **spark.ml**, and integration with cloud services such as AWS and DataBricks.
-- Importance of **preprocessing** and how PiSpark simplifies data manipulation with functionalities similar to **Pandas**, but on a distributed scale.
-
-## 2. Practical Applications
-- Use cases for PiSpark include machine learning tasks like regression, classification, and clustering.
-- Applications range from handling heavy datasets that exceed local machine capabilities to running Spark jobs in cloud environments for big data analytics.
-
-## 3. Problem-Solving Approaches
-- Introduced a structured approach to preliminary Spark operations:
-- Start Spark sessions for both local and cloud setups.
-- Reading CSV files into DataFrames.
-- Applying machine learning models using the Spark MLlib.
-
-## 4. Key Learnings and Hacks
-- The importance of creating a new environment when installing PiSpark to avoid dependency issues.
-- Tips on reading DataFrames effectively by setting the right options (e.g., headers, schema inference).
-- Guide to handling missing values efficiently through convenience methods in PiSpark.
-
-## 5. Innovative Thinking
-- Emphasized the effectiveness of **distributed computing** offered by Apache Spark for tasks that require immense processing power, eliminating the limits of local memory.
-- The use of cloud services for scalable data processing promotes flexibility and resource optimization.
-
-## 6. Personal Experiences and Anecdotes
-- The instructor shared experiences of setting up PiSpark environments and common errors encountered during installations and configurations, contributing to a better understanding of potential pitfalls.
-
-## 7. Critical and Skeptical Views
-- Critical examination of traditional methods (like MapReduce), highlighting Apache Spark's 100x speed advantage for big data processing tasks.
-- Encouraged skepticism toward reliance on single-system configurations for large datasets.
-
-## 8. Dynamic and Fast-Paced Nature
-- The conversation was fast-paced, keeping viewers engaged with continuous examples, coding demonstrations, and practical challenges throughout the video.
-- Regular reiteration of essential concepts while progressively introducing complex functionalities maintained the dynamic engagement of the training.`)*/
-
 
   const apiKey = localStorage.getItem("openaiApiKey");
   if (apiKey) {

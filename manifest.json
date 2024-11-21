@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Transcript Downloader",
+  "name": "YouTube Summarizer",
   "version": "1.0",
-  "description": "Downloads YouTube video transcripts",
+  "description": "Summarize YouTube Videos",
   "permissions": ["activeTab", "scripting"],
   "icons": {
     "16": "icons/icon16.png",
