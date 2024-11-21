@@ -3,38 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <title>YouTube Transcript Downloader</title>
+    <script src="external_libs/tailwind_with_typography.js"></script>
     <style>
+        .grotesk {
+          font-family: "Schibsted Grotesk", serif;
+          font-optical-sizing: auto;
+          font-style: normal;
+        }
+        .inter {
+          font-family: "Inter", serif;
+          font-optical-sizing: auto;
+          font-style: normal;
+        }
         body {
             width: 640px;
             padding: 10px;
-            font-family: Arial, sans-serif;
             background-color: #fff3e0; /* Warm light background */
+            font-family: "Inter", serif;
+            font-optical-sizing: auto;
+            font-style: normal;
         }
         h1 {
             font-size: 20px;
             text-align: center;
             color: #5d4037; /* Warm dark brown color */
-        }
-        button {
-            width: 256px;
-            padding: 10px;
-            margin-top: 10px;
-            border: none;
-            background-color: #ff7043; /* Warm orange background */
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 4px; /* Rounded corners */
-        }
-        button:hover {
-            background-color: #e64a19; /* Darker warm orange background */
-        }
-        button#copyButton {
-            width: 150px;
         }
         input {
             width: 256px;
@@ -49,14 +45,16 @@
         }
         #summaryOutput {
             margin-top: 20px;
+            /*padding-right: 32px;
             padding: 15px;
+            padding-top: 32px; */
             border: 1px solid #ffccbc; /* Warm light border */
             border-radius: 8px; /* Rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
             background-color: #ffe0b2; /* Warm card background */
             width: 100%;
             box-sizing: border-box; /* Include padding in width calculation */
-            font-family: 'Georgia', serif; /* Readable font */
+            font-family: 'Inter', serif; /* Readable font */
             font-size: 16px; /* Good readable font size */
             color: #4e342e; /* Warm dark brown font color */
             line-height: 1.6; /* Improved readability with line height */
@@ -64,21 +62,47 @@
         .hidden {
           display: none;
         }
+        .key-icon {
+          width: 16px; /* Set width */
+          height: 16px; /* Set height */
+        }
     </style>
 </head>
 <body>
-    <h1>YouTube Transcript Downloader / Summarizer</h1>
-    <div style="text-align: center;">
-        <input type="password" id="openaiApiKey" placeholder="Enter OpenAI API Key">
-        <button id="downloadButton">Download Transcript</button>
-        <button id="philosophicalButton">Philosophical Analysis Summary</button>
-        <button id="technicalButton">Technical and Practical Summary</button>
-        <button id="strategicButton">Strategic Business Summary</button>
-        <button id="innovativeButton">Innovative and Visionary Summary</button>
-        <button id="comprehensiveButton">Comprehensive General Summary</button>
+    <div class='container mx-auto px-4'>
+        <div class='grid grid-cols-4 gap-2'>
+            <div class='col-span-2 col-start-2 justify-items-center grotesk font-black text-2xl' >YouTube Summarizer</div>
+
+            <div class='justify-items-end flex flex-row'>
+                  <input class='w-9/12 invisible pl-1' type="password" id="openaiApiKey" placeholder="OpenAI API Key">
+                  <svg class='key-icon ml-auto mt-1' id='key-icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17l0 80c0 13.3 10.7 24 24 24l80 0c13.3 0 24-10.7 24-24l0-40 40 0c13.3 0 24-10.7 24-24l0-40 40 0c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/>
+                  </svg>
+            </div>
+
+            <div class='col-span-2 col-start-2 justify-items-end'>
+              <select class="my-2 border w-full border-gray-300 rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500" id='selection'>
+                <option value="download">Download Transcript</option>
+                <option value="philosophical">Philosophical Analysis Summary</option>
+                <option value="technical">Technical and Practical Summary</option>
+                <option value="strategic">Strategic Business Summary</option>
+                <option value="innovative">Innovative and Visionary Summary</option>
+                <option value="comprehensive">Comprehensive General Summary</option>
+              </select>
+            </div>
+            <div class='col-span-1 mt-2 justify-items-start'>
+                <div class="bg-black scale-100 pressed:scale-95 hover:scale-105 text-white text-center py-2 px-4 rounded hover:cursor-pointer w-9/12" id='summarize-button'>
+                  Summarize
+                </div>
+            </div>
+
+
+            <div class='col-start-1 col-span-4'>
+                <article id="summaryOutput" class="prose prose-sm relative"></article>
+            </div>
+        </div>
     </div>
-    <button id="copyButton" class="hidden">Copy Summary</button>
-    <div id="summaryOutput"></div>
+
     <script src="external_libs/showdown.min.js"></script>
     <script src="summarizer.js"></script>
     <script src="popup.js"></script>
