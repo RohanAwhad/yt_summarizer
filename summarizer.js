@@ -67,6 +67,12 @@ function getPodcastSummaryPrompt(summaryType) {
   return prompts[summaryType] || "Prompt not found for the given name.";
 }
 
+const extractWithRegex = (text) => {
+  const pattern = /```markdown(.*?)```/;
+  const match = text.match(pattern);
+  return match ? match[1].trim() : text.substring('```markdown'.length);
+}
+
 async function generateSummary(prompt, transcriptText, apiKey, updateUI) {
   const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
@@ -77,9 +83,8 @@ async function generateSummary(prompt, transcriptText, apiKey, updateUI) {
       { role: 'user', content: transcriptText },
       { role: 'assistant', content: '```markdown\n' }
     ],
-    max_tokens: 1024,
+    max_tokens: 2048,
     stream: true,  // Enable streaming
-    stop: ['```']
   };
 
   try {
@@ -100,32 +105,39 @@ async function generateSummary(prompt, transcriptText, apiKey, updateUI) {
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
     let summary = '';
+    let completeStream = '';
+    const processChunk = (chunk) => {
+      const lines = chunk.split('\n').filter(line => line.trim() !== '');
+      for (const line of lines) {
+        console.log(line)
+        if (line === 'data: [DONE]') {
+          console.log('Stream completed');
+          return;
+        }
 
+        try {
+          if (line.startsWith('data: ')) {
+            const json = JSON.parse(line.slice(6));
+            if (json.choices?.[0]?.delta?.content) {
+              completeStream += json.choices[0].delta.content;
+              summary = extractWithRegex(completeStream)
+              updateUI(summary);
+            }
+          }
+        } catch (err) {
+          console.error('Error parsing line:', line, err);
+        }
+      }
+    };
+
+    // Update the reading loop
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
-
-      const chunk = decoder.decode(value);
-      const lines = chunk.split('\n').filter(line => line.trim() !== '');
-      for (const line of lines) {
-        let formattedLine = line;
-
-        if (formattedLine.startsWith('data: ')) { formattedLine = formattedLine.replace('data: ', ''); }
-        if (formattedLine.startsWith('[DONE]')) {
-          console.log('Summary generation completed.');
-          return summary;
-        }
-
-        const parsedLine = JSON.parse(formattedLine);
-        if (parsedLine.choices) {
-          const deltaContent = parsedLine.choices[0].delta.content || '';
-          summary += deltaContent;
-          updateUI(summary);
-        }
-      }
+      processChunk(decoder.decode(value));
     }
-
     return summary;
+
   } catch (error) {
     console.error('Error generating summary:', error);
     return null;
